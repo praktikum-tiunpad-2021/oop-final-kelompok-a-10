@@ -1,4 +1,4 @@
-# Project Name
+# Snake Game
 
 This repository is a final project (Java GUI) from Object-Oriented Programming Class, Teknik Informatika Universitas Padjadjaran. 
 
@@ -76,4 +76,4 @@ UML image here
    - Saat permainan selesai, akan ditampilkan skor dari user
    - Pada bagian pengaturan, user dapat mengonfigurasi hal-hal berikut :
       - Warna Ular
-      - Warna Area 
+      - Warna Area Permainan
