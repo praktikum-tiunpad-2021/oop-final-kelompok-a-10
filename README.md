@@ -1,4 +1,4 @@
-# Project Name
+# Snake Game
 
 This repository is a final project (Java GUI) from Object-Oriented Programming Class, Teknik Informatika Universitas Padjadjaran. 
 
@@ -43,8 +43,11 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
 
 ## Running The App
 
-1. Masuk ke root direktori dari project SnakeGame
-2. Jalankan program dengan perintah :
+1. Masuk ke direktori SnakeGame (Folder SnakeGame)
+``` 
+ contoh : cd ~/oop-final-kelompok-10-a/SnakeGame
+ ``` 
+3. Jalankan program dengan perintah :
 ``` 
  gradlew run
  ``` 
@@ -75,7 +78,6 @@ UML image here
    - Jika Ular menyentuh setiap batas frame, maka permainan dinyatakan selesai
    - Jika Ular menyentuh dirinya sendiri, maka permainan juga dinyatakan selesai
    - Saat permainan selesai, akan ditampilkan skor dari user
-   - 
    - Pada bagian pengaturan, user dapat mengonfigurasi hal-hal berikut :
       - Warna Ular
-      - Warna Area 
+      - Warna Area Permainan
