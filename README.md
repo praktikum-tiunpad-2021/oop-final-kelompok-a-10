@@ -50,12 +50,13 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
  ``` 
 3. Tombol pada keyboard yang digunakan pada program :
    - Gunakan tombol `Up Arrow` , `Right Arrow` , `Down Arrow` , dan `Left Arrow` untuk mengarahkan ular.
+   - Gunakan tombol `W` , `A` , `S` , dan `D` untuk mengarahkan ular.
    - Gunakan tombol `Spacebar` untuk konfirmasi pilihan menu dan memulai permainan
    - Gunakan tombol `Left Arrow` dan `Right Arrow` untuk mengubah nilai pada *settings*.
 
 ## Classes Used
-`SnakeGame.java`
-   - Program utama yang berisi method main.
+`App.java`
+   - Program utama yang berisi method App.
 
 TO;DO
 

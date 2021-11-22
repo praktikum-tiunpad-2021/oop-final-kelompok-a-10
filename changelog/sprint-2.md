@@ -19,7 +19,7 @@
 | --- | ---------- | ------- | ------ |
 | 2.1 | Membuat tampilan menu dan isinya | Raihan | DONE/FAILED |
 | 2.2 | Membuat leaderboard bagi 10 skor tertinggi | Rihlan | DONE/FAILED |
-| 2.3 | Merapikan interface program | Raihan | DONE/FAILED |
+| 2.3 | Merapikan interface program | Rifqy | DONE/FAILED |
 
 ## Retrospective 
 

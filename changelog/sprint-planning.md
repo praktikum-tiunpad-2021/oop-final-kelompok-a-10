@@ -24,7 +24,7 @@
 | 1.11 | Mengatur logika score permainan | Rifqy |
 | 2.1 | Membuat tampilan menu dan isinya | Raihan |
 | 2.2 | Membuat leaderboard bagi 10 skor tertinggi | Rihlan |
-| 2.3 | Merapikan interface program | Raihan |
+| 2.3 | Merapikan interface program | Rifqy |
 | 3.1 | Membuat UML | Rifqy |
 | 3.2 | Bug Fixing | Rihlan |
 
