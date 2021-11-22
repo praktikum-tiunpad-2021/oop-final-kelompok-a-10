@@ -74,7 +74,6 @@ UML image here
    - Jika Ular menyentuh setiap batas frame, maka permainan dinyatakan selesai
    - Jika Ular menyentuh dirinya sendiri, maka permainan juga dinyatakan selesai
    - Saat permainan selesai, akan ditampilkan skor dari user
-   - 
    - Pada bagian pengaturan, user dapat mengonfigurasi hal-hal berikut :
       - Warna Ular
       - Warna Area 
