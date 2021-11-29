@@ -7,7 +7,7 @@
    <children>
       <Button fx:id="btn2" layoutX="218.0" layoutY="152.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Leaderboard" />
       <Button fx:id="btn1" layoutX="218.0" layoutY="41.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Play" />
-      <Button fx:id="btn3" layoutX="218.0" layoutY="208.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Exit" />
-      <Button fx:id="btn4" layoutX="218.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Choose Level" />
+      <Button fx:id="btn3" layoutX="218.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Exit" />
+      <!-- <Button fx:id="btn4" layoutX="218.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Choose Level" /> -->
    </children>
 </Pane>

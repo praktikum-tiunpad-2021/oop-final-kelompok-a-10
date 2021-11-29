@@ -115,8 +115,6 @@ public class App extends Application {
         btn3 = (Button) root.lookup("#btn3");
         btn3.getStyleClass().add("button-menu");
 
-        btn4 = (Button) root.lookup("#btn4");
-        btn4.getStyleClass().add("button-menu");
 
         btn1.setOnAction(e -> {
             try {
@@ -139,13 +137,13 @@ public class App extends Application {
                 ex.printStackTrace();
             }
         });
-        btn4.setOnAction(e -> {
-            try {
-                ButtonClicked(e);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
+        // btn4.setOnAction(e -> {
+        //     try {
+        //         ButtonClicked(e);
+        //     } catch (IOException ex) {
+        //         ex.printStackTrace();
+        //     }
+        // });
 
         readLeaderboard();
 
