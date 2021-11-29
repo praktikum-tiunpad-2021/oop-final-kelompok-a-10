@@ -28,6 +28,10 @@ public class Snake{
         return this.score;
     }
 
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+
     public int getSpeed(){
         return this.speed;
     }
