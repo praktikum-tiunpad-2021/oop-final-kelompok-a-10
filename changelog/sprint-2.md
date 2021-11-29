@@ -11,22 +11,22 @@
 ## Sprint Overview
 | Planned (n)   | Completed (n) |
 | ------------- |-------------- |
-| n             | n             |
+| 3             | 3             |
 
 ## Sprint 2 Backlog
 
 | ID  | Title/Desc | Asignee | Status |
 | --- | ---------- | ------- | ------ |
-| 2.1 | Membuat tampilan menu dan isinya | Raihan | DONE/FAILED |
-| 2.2 | Membuat leaderboard bagi 10 skor tertinggi | Rihlan | DONE/FAILED |
-| 2.3 | Merapikan interface program | Rifqy | DONE/FAILED |
+| 2.1 | Membuat tampilan menu dan isinya | Raihan | DONE |
+| 2.2 | Membuat leaderboard bagi 10 skor tertinggi | Rihlan | DONE |
+| 2.3 | Merapikan interface program | Rifqy | DONE |
 
 ## Retrospective 
 
-Sprint kemarin dianggap terlalu sedikit sehingga diperlukan adanya penyesuaian tugas. 
+Semua tugas pada sprint 2 dapat terlaksana dengan baik 
 
 ## Next Sprint Backlog (Sprint 3)
 | ID  | Title/Desc | Asignee | 
 | --- | ---------- | ------- | 
-| 3.1 | Preparing the x | Jane Doe | 
-| 3.2 | Make the x | John Doe | 
+| 3.1 | Membuat UML | Rifqy | 
+| 3.2 | Bug Fixing | Rihlan | 
