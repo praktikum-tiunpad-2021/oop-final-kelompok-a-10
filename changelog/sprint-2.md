@@ -27,6 +27,7 @@ Semua tugas pada sprint 2 dapat terlaksana dengan baik
 
 ## Next Sprint Backlog (Sprint 3)
 | ID  | Title/Desc | Asignee | 
-| --- | ---------- | ------- | 
-| 3.1 | Membuat UML | Rifqy | 
-| 3.2 | Bug Fixing | Rihlan | 
+| --- | ---------- | ------- |
+| 3.1 | Level Game | Raihan | 
+| 3.2 | Membuat UML | Rifqy | 
+| 3.3 | Bug Fixing | Rihlan | 

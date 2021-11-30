@@ -17,8 +17,9 @@
 
 | ID  | Title/Desc | Asignee | Status |
 | --- | ---------- | ------- | ------ |
-| 3.1 | Membuat UML | Rifqy | DONE/FAILED |
-| 3.2 | Bug Fixing | Rihlan | DONE/FAILED |
+| 3.1 | Level Game | Raihan | DONE/FAILED |
+| 3.2 | Membuat UML | Rifqy | DONE/FAILED |
+| 3.3 | Bug Fixing | Rihlan | DONE/FAILED |
 
 ## Retrospective 
 
