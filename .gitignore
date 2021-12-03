@@ -1,1 +1,5 @@
 .vscode
+.idea
+SnakeGame/.gradle
+SnakeGame/bin
+SnakeGame/build
