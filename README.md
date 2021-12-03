@@ -37,7 +37,8 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
    - Membuat leaderboard bagi 10 skor tertinggi
    - Merapikan interface program
    
-- **[Sprint 3](changelog/sprint-3.md) - (30/11/2021 - 6/12/2021)** 
+- **[Sprint 3](changelog/sprint-3.md) - (30/11/2021 - 6/12/2021)**
+   - Level Game
    - Membuat UML
    - Bug Fixing
 

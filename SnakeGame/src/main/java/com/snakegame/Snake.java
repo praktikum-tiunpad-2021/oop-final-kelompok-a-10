@@ -28,6 +28,13 @@ public class Snake{
         return this.score;
     }
 
+<<<<<<< HEAD
+=======
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+
+>>>>>>> temp
     public int getSpeed(){
         return this.speed;
     }

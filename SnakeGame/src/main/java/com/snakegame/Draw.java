@@ -1,5 +1,6 @@
 package com.snakegame;
 
+import javafx.application.Application;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -10,6 +11,8 @@ public class Draw {
             gc.setFill(Color.RED);
             gc.setFont(new Font("", 50));
             gc.fillText("GAME OVER", (frame.getWidth() / 4) * frame.getCellSize(), (frame.getHeight() / 2) * frame.getCellSize());
+
+
             return;
         }
 
@@ -23,28 +26,35 @@ public class Draw {
                 snake.bodyCells.get(0).y--;
                 if (snake.bodyCells.get(0).y < 0) {
                     engine.setGameOver(true);
+                    engine.setIsInGame(false);
                 }
-                break;
+            break;
             case DOWN:
                 snake.bodyCells.get(0).y++;
                 if (snake.bodyCells.get(0).y > frame.getHeight()) {
                     engine.setGameOver(true);
+                    engine.setIsInGame(false);
+
                 }
-                break;
+            break;
             case LEFT:
                 snake.bodyCells.get(0).x--;
                 if (snake.bodyCells.get(0).x < 0) {
                     engine.setGameOver(true);
+                    engine.setIsInGame(false);
+
                 }
-                break;
+            break;
             case RIGHT:
                 snake.bodyCells.get(0).x++;
                 if (snake.bodyCells.get(0).x > frame.getWidth()) {
                     engine.setGameOver(true);
-                }
-                break;
+                    engine.setIsInGame(false);
 
+                }
+            break;
         }
+
 
         // Bertambah panjang saat memakan buah
         if (fruit.getX() == snake.bodyCells.get(0).x && fruit.getY() == snake.bodyCells.get(0).y) {
@@ -111,6 +121,7 @@ public class Draw {
             gc.fillRect(c.x * frame.getCellSize(), c.y * frame.getCellSize(), frame.getCellSize() - 5, frame.getCellSize() - 5);
 
         }
+
 
     }
 
