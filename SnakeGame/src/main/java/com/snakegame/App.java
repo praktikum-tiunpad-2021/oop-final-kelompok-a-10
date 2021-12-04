@@ -311,7 +311,7 @@ public class App extends Application {
         // New pop-up window for inserting player's name
         scoreStage = new Stage();
         scoreStage.setResizable(false);
-        scoreStage.getIcons().add(new Image("img/snake-icon.jpg"));
+        scoreStage.getIcons().add(new Image(new File("img/snake-icon.jpg").toURI().toString()));
         scoreStage.setTitle("GAME OVER !!!");
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Scores.fxml")));
