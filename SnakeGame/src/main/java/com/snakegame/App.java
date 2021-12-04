@@ -5,7 +5,6 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -26,6 +25,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 
 public class App extends Application {
     Frame frame = new Frame();
@@ -58,8 +58,6 @@ public class App extends Application {
 
         Pane menuPane = (Pane) root.lookup("#menu");
         menuPane.getStyleClass().add("back");
-
-
 
         startBtn = (Button) root.lookup("#startBtn");
         startBtn.getStyleClass().add("button-menu");
@@ -453,9 +451,10 @@ public class App extends Application {
             menu = new Scene(mainMenu());
             menu.getStylesheets().add(css);
 
+            primaryStage.getIcons().add(new Image(new File("img/snake-icon.jpg").toURI().toString()));
+
             primaryStage.setScene(menu);
             primaryStage.setResizable(false);
-            primaryStage.getIcons().add(new Image("img/snake-icon.jpg"));
             primaryStage.setTitle("SNAKE GAME");
             primaryStage.show();
         }
@@ -469,4 +468,3 @@ public class App extends Application {
     }
 
 }
-
