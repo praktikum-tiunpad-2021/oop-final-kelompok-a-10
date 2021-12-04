@@ -1,9 +1,7 @@
 package com.snakegame;
 
-import javafx.scene.control.Button;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Snake{
     int speed;

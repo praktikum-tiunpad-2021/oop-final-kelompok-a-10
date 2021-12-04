@@ -1,14 +1,12 @@
 package com.snakegame;
 
-import javafx.application.Application;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class Draw {
-
+    // Background color for playing area
     public void drawBackground(GraphicsContext gc, Frame frame){
-        // Background color for playing area
         for (int i = 0; i < frame.getWidth(); i++) {
             for (int j = 0; j < frame.getHeight(); j++) {
                 if ((i + j) % 2 == 0) {
@@ -29,7 +27,7 @@ public class Draw {
         }
     }
 
-    // Set snake's color
+    // Set snake's color and draw
     public void setSnakeColor(GraphicsContext gc, Frame frame, Snake snake){
         for (Cell c : snake.bodyCells) {
             gc.setFill(Color.YELLOW);
@@ -39,7 +37,9 @@ public class Draw {
         }
     }
 
+    // Draw moving snake
     public void moveSnake(Frame frame, Engine engine, Snake snake){
+        // If snake's head hit playing area border, then the game is over
         switch (snake.getCurDirection()) {
             case UP -> {
                 snake.bodyCells.get(0).y--;
@@ -75,16 +75,16 @@ public class Draw {
         }
     }
 
+    // Snake's length increasing whenever ate a fruit
     public void increaseSnakeLength(Frame frame, Player playerGame, Snake snake, Fruit fruit){
-        // Snake's length increasing whenever ate a fruit
         if (fruit.getX() == snake.bodyCells.get(0).x && fruit.getY() == snake.bodyCells.get(0).y) {
-            snake.bodyCells.add(new Cell(-1, -1));  // New head for snake
+            snake.bodyCells.add(new Cell(-1, -1));  // New head for snake at index -1
             fruit.newFruit(frame, snake, playerGame);
         }
     }
 
+    // Game over when snake's head hitting its own body
     public void invalidSnakeMove(Engine engine, Snake snake){
-        // Game over when snake's head hitting its own body
         for (int i = 1; i < snake.getBodySize(); i++) {
             if (snake.bodyCells.get(0).x == snake.bodyCells.get(i).x && snake.bodyCells.get(0).y == snake.bodyCells.get(i).y) {
                 engine.setGameOver(true);
@@ -92,8 +92,9 @@ public class Draw {
         }
     }
 
+    // Draw fruit with randomized color
     public void drawFruit(GraphicsContext gc, Frame frame, Fruit fruit){
-        // Randomize fruit color
+        // Randomize fruit's color
         Color cc = switch (fruit.getColor()) {
             case 0 -> Color.PURPLE;
             case 1 -> Color.LIGHTBLUE;
@@ -108,15 +109,15 @@ public class Draw {
         gc.fillOval(fruit.getX() * frame.getCellSize(), fruit.getY() * frame.getCellSize(), frame.getCellSize(), frame.getCellSize());
     }
 
+    // Showing player's current score
     public void drawPlayerScore(GraphicsContext gc, Player playerGame){
-        // Showing player's current score
         gc.setFill(Color.CYAN);
-        gc.setFont(new Font("Comic sans ms", 30));
+        gc.setFont(new Font("Comic Sans MS", 30));
         gc.fillText("Score : " + playerGame.getScore(), 10, 30);
     }
 
-
-    public void drawCell(GraphicsContext gc, Engine engine, Frame frame, Player playerGame, Snake snake, Fruit fruit) {
+    // Draw all components
+    public void drawAllComponents(GraphicsContext gc, Engine engine, Frame frame, Player playerGame, Snake snake, Fruit fruit) {
 
         drawBackground(gc, frame);
 

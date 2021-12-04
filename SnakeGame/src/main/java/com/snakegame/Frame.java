@@ -3,7 +3,7 @@ package com.snakegame;
 public class Frame {
     int width;
     int height;
-    int cellSize;
+    int cellSize;   // Size of each cell inside playing area
 
     Frame(){
         this.width = 20;

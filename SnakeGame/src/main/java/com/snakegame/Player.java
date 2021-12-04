@@ -20,16 +20,12 @@ public class Player implements Serializable {
         this.name = name;
     }
 
-    public String getName(){
-        return this.name;
-    }
-
-    public void setScore(int score){
-        this.score = score;
-    }
-
     public void incrementScore(){
         this.score = this.score + 1;
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public int getScore(){ return this.score; }

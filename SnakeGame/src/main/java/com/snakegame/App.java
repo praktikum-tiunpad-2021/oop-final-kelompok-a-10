@@ -5,31 +5,36 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class App extends Application {
     Frame frame = new Frame();
     Engine engine = new Engine();
     KeyboardListener keyboardListener = new KeyboardListener();
     Draw draw = new Draw();
-    Player playerGame;
     Snake snake = new Snake();
-//    int snakeSpeed = 5; // initial snake's speed that can be changed through level menu
     Fruit fruit = new Fruit();
+    Player playerGame;
 
     private Scene menu;
     private Scene level;
@@ -47,74 +52,14 @@ public class App extends Application {
 
     private ObservableList<Player> playerList = FXCollections.observableArrayList();
 
-    public void ButtonClicked(ActionEvent e) throws IOException {
-
-        if (e.getSource() == startBtn) {
-            try {
-                engine.setGameOver(false);
-                startGame();
-
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-
-        else if(e.getSource() == levelBtn){
-            try{
-                changeLevel();
-            }
-            catch (Exception ex){
-                ex.printStackTrace();
-            }
-        }
-
-        else if(e.getSource() == easyBtn){
-            this.snake.setSpeed(5);
-            mainStage.setScene(menu);
-        }
-
-        else if(e.getSource() == mediumBtn){
-            this.snake.setSpeed(8);
-            mainStage.setScene(menu);
-        }
-
-        else if(e.getSource() == hardBtn){
-            mainStage.setScene(menu);
-            this.snake.setSpeed(12);
-        }
-
-        else if (e.getSource() == leaderboardBtn) {
-            try {
-                leaderboard = new Scene(showLeaderboard());
-                leaderboard.getStylesheets().add(css);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-            mainStage.setScene(leaderboard);
-        }
-
-        else if (e.getSource() == okBtn) {
-            playerGame.setName(scoreNameField.getText());
-            playerList.add(new Player(playerGame.getName(), playerGame.getScore()));
-            scoreStage.close();
-        }
-
-        else if (e.getSource() == backButton) {
-            mainStage.setScene(menu);
-        }
-
-        else if(e.getSource() == exitBtn){
-            writeLeaderboard(playerList);
-            System.exit(0);
-        }
-
-    }
-
+    // Main menu
     private Pane mainMenu() throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Menu.fxml")));
 
         Pane menuPane = (Pane) root.lookup("#menu");
         menuPane.getStyleClass().add("back");
+
+
 
         startBtn = (Button) root.lookup("#startBtn");
         startBtn.getStyleClass().add("button-menu");
@@ -128,7 +73,7 @@ public class App extends Application {
         exitBtn = (Button) root.lookup("#exitBtn");
         exitBtn.getStyleClass().add("button-menu");
 
-
+        // Action performed depends on user's click
         startBtn.setOnAction(e -> {
             try {
                 ButtonClicked(e);
@@ -161,11 +106,13 @@ public class App extends Application {
             }
         });
 
+        // Read existing leaderboard from PlayerSaveFile.ser
         readLeaderboard();
 
         return menuPane;
     }
 
+    // Level menu
     private Pane level() throws IOException{
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Level.fxml")));
         Pane levelPane = (Pane) root.lookup("#menu");
@@ -183,6 +130,7 @@ public class App extends Application {
         backButton = (Button) root.lookup("#backButton");
         backButton.getStyleClass().add("button-menu");
 
+        // Action performed depends on user's click
         easyBtn.setOnAction(e -> {
             try {
                 ButtonClicked(e);
@@ -218,99 +166,7 @@ public class App extends Application {
         return levelPane;
     }
 
-    public void startGame() throws IOException{
-        this.playerGame = new Player();
-        this.snake.bodyCells.clear();
-
-        int snakeSpeed = this.snake.getSpeed();
-        this.engine.setIsInGame(true);
-
-        fruit.newFruit(frame, snake, playerGame);
-
-        Group root = new Group();
-        Canvas c = new Canvas(frame.getWidth() * frame.getCellSize(), frame.getHeight() * frame.getCellSize());
-        GraphicsContext gc = c.getGraphicsContext2D();
-        root.getChildren().add(c);
-
-        AnimationTimer aTimer = new AnimationTimer(){
-            long lastCell = 0;
-            @Override
-            public void handle(long now) {
-
-                if (lastCell == 0) {
-                    lastCell = now;
-                    draw.drawCell(gc, engine, frame, playerGame, snake, fruit);
-                }
-
-                if (now - lastCell > 1000000000 / snakeSpeed) {
-                    lastCell = now;
-                    draw.drawCell(gc, engine, frame, playerGame, snake, fruit);
-                    try {
-                        if(engine.getIsGameOver()){
-                            stop();
-                            stopGame();
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        };
-
-        aTimer.start();
-
-        Scene scene = new Scene(root, frame.getWidth() * frame.getCellSize(), frame.getHeight() * frame.getCellSize());
-
-        keyboardListener.listenKey(scene, snake);
-
-        // snake length (5) initialization
-        for(int i=0; i<5; ++i){
-            snake.bodyCells.add(new Cell(frame.getWidth() / 2, frame.getHeight() / 2));
-        }
-
-        mainStage.setResizable(false);
-        mainStage.setScene(scene);
-        mainStage.show();
-
-    }
-
-    private void stopGame() throws IOException {
-        mainStage.setScene(menu);
-
-        scoreStage = new Stage();
-        scoreStage.setResizable(false);
-        scoreStage.getIcons().add(new Image("img/snake-icon.jpg"));
-        scoreStage.setTitle("GAME OVER !!!");
-
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Scores.fxml")));
-        Pane root1 = (Pane) root.lookup("#scores");
-        okBtn = (Button) root.lookup("#enterButton");
-        scoreNameField = (TextField) root.lookup("#inputField");
-
-        okBtn.setOnAction(e -> {
-            try {
-                ButtonClicked(e);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-        Scene scene = new Scene(root1);
-        scene.getStylesheets().add(css);
-        scoreStage.setScene(scene);
-        scoreStage.show();
-
-
-    }
-
-    public void changeLevel() throws IOException {
-        level = new Scene(level());
-        level.getStylesheets().add(css);
-        mainStage.setScene(level);
-    }
-
-
+    // Read existing leaderboard from external file
     private void readLeaderboard() {
         try {
             FileInputStream fis = new FileInputStream("PlayerSaveFile.ser");
@@ -328,6 +184,7 @@ public class App extends Application {
 
     }
 
+    // Save player data upon exiting program to external file
     public void writeLeaderboard(ObservableList<Player> playerList) {
         try {
             FileOutputStream fos = new FileOutputStream("PlayerSaveFile.ser");
@@ -340,10 +197,11 @@ public class App extends Application {
         }
     }
 
+    // Leaderboard menu
     public Pane showLeaderboard() throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/LeaderBoard.fxml")));
-        Pane root1 = (Pane) root.lookup("#pane");
-        root1.getStyleClass().add("back");
+        Pane leaderboardPane = (Pane) root.lookup("#pane");
+        leaderboardPane.getStyleClass().add("back");
 
         backButton = (Button) root.lookup("#backButton");
         backButton.getStyleClass().add("button-menu");
@@ -355,9 +213,10 @@ public class App extends Application {
             }
         });
 
+        // Table for showing player name and score
         TableView<Player> table = new TableView<>();
         table.getStyleClass().add("table-view");
-        table.setMaxHeight((frame.getHeight() - 5) * frame.getCellSize());
+        table.setMaxHeight((frame.getHeight() - 3) * frame.getCellSize());
         table.setMaxWidth(frame.getWidth() * frame.getCellSize());
 
         TableColumn<Player, String> name = new TableColumn<>("Name");
@@ -368,15 +227,220 @@ public class App extends Application {
         score.setMinWidth(frame.getWidth() * frame.getCellSize() / 2.0);
         score.setCellValueFactory(new PropertyValueFactory<>("score"));
 
+        // Sort player on the table based on player's score (Descending)
         playerList.sort((c1, c2) -> Integer.compare(c2.getScore(), c1.getScore()));
 
         table.setItems(playerList);
         table.getColumns().add(name);
         table.getColumns().add(score);
 
-        root1.getChildren().add(table);
+        leaderboardPane.getChildren().add(table);
 
-        return root1;
+        return leaderboardPane;
+    }
+
+    // Start the game
+    public void startGame() throws IOException{
+        this.playerGame = new Player();
+        this.snake.bodyCells.clear();   // If exist, clear all snake's body
+
+        int snakeSpeed = this.snake.getSpeed();
+        fruit.newFruit(frame, snake, playerGame);
+
+        Group root = new Group();
+        Canvas c = new Canvas(frame.getWidth() * frame.getCellSize(), frame.getHeight() * frame.getCellSize());
+        GraphicsContext gc = c.getGraphicsContext2D();
+        root.getChildren().add(c);
+
+        // Gameplay animation depends on snake's speed as Frame Rate
+        AnimationTimer aTimer = new AnimationTimer(){
+            long lastCell = 0;
+            @Override
+            public void handle(long now) {
+
+                // When the game starts, this block executed
+                if (lastCell == 0) {
+                    lastCell = now;
+                    draw.drawAllComponents(gc, engine, frame, playerGame, snake, fruit);
+                }
+
+                // When the snake's body already exist, this block executed
+                if (now - lastCell > 1000000000 / snakeSpeed) {
+                    lastCell = now;
+                    draw.drawAllComponents(gc, engine, frame, playerGame, snake, fruit);
+                    try {
+                        if(engine.getIsGameOver()){
+                            stop();     // Stop the animation timer
+                            stopGame();
+                        }
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        aTimer.start(); // Starts the animation
+
+        Scene gameScene = new Scene(root, frame.getWidth() * frame.getCellSize(), frame.getHeight() * frame.getCellSize());
+
+        keyboardListener.listenKey(gameScene, snake);
+
+        // snake's length (5) initialization
+        for(int i=0; i<5; ++i){
+            snake.bodyCells.add(new Cell(frame.getWidth() / 2, frame.getHeight() / 2));
+        }
+
+        mainStage.setResizable(false);
+        mainStage.setScene(gameScene);
+        mainStage.show();
+
+    }
+
+    // Stop the game if snake's move is invalid
+    private void stopGame() throws IOException {
+        if(!engine.getIsInGame()){
+            try{
+                engine.setIsInMenu(true);
+                mainStage.setScene(menu);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        // New pop-up window for inserting player's name
+        scoreStage = new Stage();
+        scoreStage.setResizable(false);
+        scoreStage.getIcons().add(new Image("img/snake-icon.jpg"));
+        scoreStage.setTitle("GAME OVER !!!");
+
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Scores.fxml")));
+        Pane scorePane = (Pane) root.lookup("#scores");
+        okBtn = (Button) root.lookup("#enterButton");
+        scoreNameField = (TextField) root.lookup("#inputField");
+
+        okBtn.setOnAction(e -> {
+            try {
+                ButtonClicked(e);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        Scene scoreScene = new Scene(scorePane);
+        scoreScene.getStylesheets().add(css);
+        scoreStage.setScene(scoreScene);
+        scoreStage.show();
+
+
+    }
+
+    // Action performed when specific button is clicked
+    public void ButtonClicked(ActionEvent e) throws IOException {
+
+        // Start the game
+        if (e.getSource() == startBtn) {
+            try {
+                engine.setIsInMenu(false);
+                engine.setIsInGame(true);
+                engine.setGameOver(false);
+                startGame();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        // Change level
+        else if(e.getSource() == levelBtn){
+            try{
+                level = new Scene(level());
+                level.getStylesheets().add(css);
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+            mainStage.setScene(level);
+        }
+
+        // Set level = easy
+        else if(e.getSource() == easyBtn){
+            try{
+                this.snake.setSpeed(5);
+                mainStage.setScene(menu);
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+        // Set level = medium
+        else if(e.getSource() == mediumBtn){
+            try{
+                this.snake.setSpeed(8);
+                mainStage.setScene(menu);
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+
+        // Set level = hard
+        else if(e.getSource() == hardBtn){
+            try{
+                this.snake.setSpeed(12);
+                mainStage.setScene(menu);
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+
+        // Show leaderboard
+        else if (e.getSource() == leaderboardBtn) {
+            try {
+                leaderboard = new Scene(showLeaderboard());
+                leaderboard.getStylesheets().add(css);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            mainStage.setScene(leaderboard);
+        }
+
+        // Confirm button for pop-up score window
+        else if (e.getSource() == okBtn) {
+            try{
+                playerGame.setName(scoreNameField.getText());
+                playerList.add(new Player(playerGame.getName(), playerGame.getScore()));
+                scoreStage.close();
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+
+        // Back to previous scene
+        else if (e.getSource() == backButton) {
+            try{
+                mainStage.setScene(menu);
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+
+        // Exit the program
+        else if(e.getSource() == exitBtn){
+            try{
+                // Saving player's data to external files
+                writeLeaderboard(playerList);
+                System.exit(0);
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
     }
 
     @Override

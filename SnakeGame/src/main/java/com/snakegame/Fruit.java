@@ -15,11 +15,14 @@ public class Fruit {
         this.rand = new Random();
     }
 
+    // Generate new fruit
     public void newFruit(Frame frame, Snake snake, Player player) {
         start: while (true) {
+            // Randomize fruit location inside playing area
             setX(rand.nextInt(frame.getWidth()));
             setY(rand.nextInt(frame.getHeight()));
 
+            // Handling fruit location if occupied by snake's body
             for (Cell c : snake.bodyCells) {
                 if (c.x == getX() && c.y == getY()) {
                     continue start;

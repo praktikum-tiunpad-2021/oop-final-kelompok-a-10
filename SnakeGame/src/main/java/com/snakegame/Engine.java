@@ -11,9 +11,9 @@ public class Engine {
         this.isInMenu = true;
     }
 
-    public void setIsInGame(Boolean state) {
-        this.isInGame = state;
-    }
+    public void setIsInMenu(Boolean state) { this.isInMenu = state; }
+
+    public void setIsInGame(Boolean state) { this.isInGame = state; }
 
     public void setGameOver(Boolean state){
         this.isGameOver = state;
