@@ -6,15 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class Draw {
-    public void drawCell(GraphicsContext gc, Engine engine, Frame frame, Snake snake, Fruit fruit) {
-        if (engine.getIsGameOver()) {
-            gc.setFill(Color.RED);
-            gc.setFont(new Font("", 50));
-            gc.fillText("GAME OVER", (frame.getWidth() / 4) * frame.getCellSize(), (frame.getHeight() / 2) * frame.getCellSize());
-
-
-            return;
-        }
+    public void drawCell(GraphicsContext gc, Engine engine, Frame frame, Player playerGame, Snake snake, Fruit fruit) {
 
         for (int i = snake.getBodySize() - 1; i >= 1; i--) {
             snake.bodyCells.get(i).x = snake.bodyCells.get(i - 1).x;
@@ -22,44 +14,44 @@ public class Draw {
         }
 
         switch (snake.getCurDirection()) {
-            case UP:
+            case UP -> {
                 snake.bodyCells.get(0).y--;
                 if (snake.bodyCells.get(0).y < 0) {
                     engine.setGameOver(true);
                     engine.setIsInGame(false);
                 }
-            break;
-            case DOWN:
+            }
+            case DOWN -> {
                 snake.bodyCells.get(0).y++;
                 if (snake.bodyCells.get(0).y > frame.getHeight()) {
                     engine.setGameOver(true);
                     engine.setIsInGame(false);
 
                 }
-            break;
-            case LEFT:
+            }
+            case LEFT -> {
                 snake.bodyCells.get(0).x--;
                 if (snake.bodyCells.get(0).x < 0) {
                     engine.setGameOver(true);
                     engine.setIsInGame(false);
 
                 }
-            break;
-            case RIGHT:
+            }
+            case RIGHT -> {
                 snake.bodyCells.get(0).x++;
                 if (snake.bodyCells.get(0).x > frame.getWidth()) {
                     engine.setGameOver(true);
                     engine.setIsInGame(false);
 
                 }
-            break;
+            }
         }
 
 
         // Bertambah panjang saat memakan buah
         if (fruit.getX() == snake.bodyCells.get(0).x && fruit.getY() == snake.bodyCells.get(0).y) {
             snake.bodyCells.add(new Cell(-1, -1));
-            fruit.newFruit(frame, snake);
+            fruit.newFruit(frame, snake, playerGame);
         }
 
         // Game over saat mengenai tubuh ular 
@@ -81,35 +73,21 @@ public class Draw {
             }
         }
 
-
-        // gc.setFill(Color.BLACK);
-        // gc.fillRect(0, 0, frame.getWidth() * frame.getCellSize(), frame.getHeight() * frame.getCellSize());
-
         // Menampilkan score
         gc.setFill(Color.CYAN);
         gc.setFont(new Font("", 30));
-        gc.fillText("Score: " + snake.getScore(), 10, 30);
+        gc.fillText("Score: " + playerGame.getScore(), 10, 30);
 
         // Randomisasi warna fruit
-        Color cc = Color.WHITE;
+        Color cc = switch (fruit.getColor()) {
+            case 0 -> Color.PURPLE;
+            case 1 -> Color.LIGHTBLUE;
+            case 2 -> Color.YELLOW;
+            case 3 -> Color.PINK;
+            case 4 -> Color.ORANGE;
+            default -> Color.WHITE;
+        };
 
-        switch (fruit.getColor()) {
-            case 0:
-                cc = Color.PURPLE;
-                break;
-            case 1:
-                cc = Color.LIGHTBLUE;
-                break;
-            case 2:
-                cc = Color.YELLOW;
-                break;
-            case 3:
-                cc = Color.PINK;
-                break;
-            case 4:
-                cc = Color.ORANGE;
-                break;
-        }
         gc.setFill(cc);
         gc.fillOval(fruit.getX() * frame.getCellSize(), fruit.getY() * frame.getCellSize(), frame.getCellSize(), frame.getCellSize());
 

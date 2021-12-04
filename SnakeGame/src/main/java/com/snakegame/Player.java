@@ -6,6 +6,11 @@ public class Player implements Serializable {
     private String name;
     private int score;
 
+    Player(){
+        this.name = null;
+        this.score = -1;
+    }
+
     Player(String name, int score){
         this.name = name;
         this.score = score;
@@ -24,11 +29,9 @@ public class Player implements Serializable {
     }
 
     public void incrementScore(){
-        this.score++;
+        this.score = this.score + 1;
     }
 
-    public int getScore(){
-        return this.score;
-    }
+    public int getScore(){ return this.score; }
 
 }

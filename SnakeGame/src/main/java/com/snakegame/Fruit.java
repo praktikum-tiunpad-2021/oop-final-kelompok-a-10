@@ -15,7 +15,7 @@ public class Fruit {
         this.rand = new Random();
     }
 
-    public void newFruit(Frame frame, Snake snake) {
+    public void newFruit(Frame frame, Snake snake, Player player) {
         start: while (true) {
             setX(rand.nextInt(frame.getWidth()));
             setY(rand.nextInt(frame.getHeight()));
@@ -27,7 +27,7 @@ public class Fruit {
             }
 
             setColor();
-            snake.incrementScore();
+            player.incrementScore();
             break;
 
         }
@@ -57,13 +57,4 @@ public class Fruit {
         return this.y;
     }
 
-    public int randomFruitX(Frame frame){
-        this.x = rand.nextInt(frame.getWidth());
-        return this.x;
-    }
-
-    public int randomFruitY(Frame frame){
-        this.y = rand.nextInt(frame.getHeight());
-        return this.y;
-    }
 }

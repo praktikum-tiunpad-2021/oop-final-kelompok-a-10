@@ -16,16 +16,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 
 public class App extends Application {
@@ -33,43 +26,64 @@ public class App extends Application {
     Engine engine = new Engine();
     KeyboardListener keyboardListener = new KeyboardListener();
     Draw draw = new Draw();
+    Player playerGame;
     Snake snake = new Snake();
+//    int snakeSpeed = 5; // initial snake's speed that can be changed through level menu
     Fruit fruit = new Fruit();
 
-    private Scene game;
     private Scene menu;
     private Scene level;
     private Scene leaderboard;
 
     private Stage mainStage;
-    private Stage scoreStage = new Stage();
+    private Stage scoreStage;
 
-    private String scoreName;
-
-    private Button btn1, btn2, btn3, btn4, backButton, okBtn;
-
-//    private Button playBtn, menuBtn, levelBtn, leaderboardBtn;
+    private Button startBtn, leaderboardBtn, exitBtn, levelBtn, backButton, okBtn;
+    private Button easyBtn, mediumBtn, hardBtn;
 
     private TextField scoreNameField;
 
-//    private Button easyBtn, mediumBtn, hardBtn;
-
     private String css;
 
-    private ObservableList<Player> player = FXCollections.observableArrayList();
+    private ObservableList<Player> playerList = FXCollections.observableArrayList();
 
     public void ButtonClicked(ActionEvent e) throws IOException {
 
-        if (e.getSource() == btn1) {
+        if (e.getSource() == startBtn) {
             try {
+                engine.setGameOver(false);
                 startGame();
+
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-
         }
 
-        else if (e.getSource() == btn2) {
+        else if(e.getSource() == levelBtn){
+            try{
+                changeLevel();
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+
+        else if(e.getSource() == easyBtn){
+            this.snake.setSpeed(5);
+            mainStage.setScene(menu);
+        }
+
+        else if(e.getSource() == mediumBtn){
+            this.snake.setSpeed(8);
+            mainStage.setScene(menu);
+        }
+
+        else if(e.getSource() == hardBtn){
+            mainStage.setScene(menu);
+            this.snake.setSpeed(12);
+        }
+
+        else if (e.getSource() == leaderboardBtn) {
             try {
                 leaderboard = new Scene(showLeaderboard());
                 leaderboard.getStylesheets().add(css);
@@ -80,81 +94,138 @@ public class App extends Application {
         }
 
         else if (e.getSource() == okBtn) {
-            scoreName = scoreNameField.getText();
-
-            player.add(new Player(scoreName, snake.getScore()));
-
+            playerGame.setName(scoreNameField.getText());
+            playerList.add(new Player(playerGame.getName(), playerGame.getScore()));
             scoreStage.close();
         }
 
         else if (e.getSource() == backButton) {
             mainStage.setScene(menu);
-
         }
 
-        else if(e.getSource() == btn3){
-            writeLeaderboard(player);
+        else if(e.getSource() == exitBtn){
+            writeLeaderboard(playerList);
             System.exit(0);
         }
 
     }
 
-    private Pane createMenu() throws IOException {
-        // menu
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
+    private Pane mainMenu() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Menu.fxml")));
 
-        Pane root1 = (Pane) root.lookup("#menu");
-        root1.getStyleClass().add("back");
+        Pane menuPane = (Pane) root.lookup("#menu");
+        menuPane.getStyleClass().add("back");
 
-        btn1 = (Button) root.lookup("#btn1");
-        btn1.getStyleClass().add("button-menu");
+        startBtn = (Button) root.lookup("#startBtn");
+        startBtn.getStyleClass().add("button-menu");
 
-        btn2 = (Button) root.lookup("#btn2");
-        btn2.getStyleClass().add("button-menu");
+        levelBtn = (Button) root.lookup("#levelBtn");
+        levelBtn.getStyleClass().add("button-menu");
 
-        btn3 = (Button) root.lookup("#btn3");
-        btn3.getStyleClass().add("button-menu");
+        leaderboardBtn = (Button) root.lookup("#leaderboardBtn");
+        leaderboardBtn.getStyleClass().add("button-menu");
+
+        exitBtn = (Button) root.lookup("#exitBtn");
+        exitBtn.getStyleClass().add("button-menu");
 
 
-        btn1.setOnAction(e -> {
+        startBtn.setOnAction(e -> {
             try {
                 ButtonClicked(e);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         });
-        btn2.setOnAction(e -> {
+
+        levelBtn.setOnAction(e -> {
             try {
                 ButtonClicked(e);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         });
-        btn3.setOnAction(e -> {
+
+        leaderboardBtn.setOnAction(e -> {
             try {
                 ButtonClicked(e);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         });
-        // btn4.setOnAction(e -> {
-        //     try {
-        //         ButtonClicked(e);
-        //     } catch (IOException ex) {
-        //         ex.printStackTrace();
-        //     }
-        // });
+
+        exitBtn.setOnAction(e -> {
+            try {
+                ButtonClicked(e);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         readLeaderboard();
 
-        return root1;
+        return menuPane;
+    }
+
+    private Pane level() throws IOException{
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Level.fxml")));
+        Pane levelPane = (Pane) root.lookup("#menu");
+        levelPane.getStyleClass().add("back");
+
+        easyBtn = (Button) root.lookup("#easy");
+        easyBtn.getStyleClass().add("button-menu");
+
+        mediumBtn = (Button) root.lookup("#medium");
+        mediumBtn.getStyleClass().add("button-menu");
+
+        hardBtn = (Button) root.lookup("#hard");
+        hardBtn.getStyleClass().add("button-menu");
+
+        backButton = (Button) root.lookup("#backButton");
+        backButton.getStyleClass().add("button-menu");
+
+        easyBtn.setOnAction(e -> {
+            try {
+                ButtonClicked(e);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        mediumBtn.setOnAction(e -> {
+            try {
+                ButtonClicked(e);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        hardBtn.setOnAction(e -> {
+            try {
+                ButtonClicked(e);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        backButton.setOnAction(e -> {
+            try {
+                ButtonClicked(e);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        return levelPane;
     }
 
     public void startGame() throws IOException{
-        int speed = this.snake.getSpeed();
+        this.playerGame = new Player();
+        this.snake.bodyCells.clear();
+
+        int snakeSpeed = this.snake.getSpeed();
         this.engine.setIsInGame(true);
 
-        fruit.newFruit(frame, snake);
+        fruit.newFruit(frame, snake, playerGame);
 
         Group root = new Group();
         Canvas c = new Canvas(frame.getWidth() * frame.getCellSize(), frame.getHeight() * frame.getCellSize());
@@ -168,17 +239,16 @@ public class App extends Application {
 
                 if (lastCell == 0) {
                     lastCell = now;
-                    draw.drawCell(gc, engine, frame, snake, fruit);
+                    draw.drawCell(gc, engine, frame, playerGame, snake, fruit);
                 }
 
-                if (now - lastCell > 1000000000 / speed) {
+                if (now - lastCell > 1000000000 / snakeSpeed) {
                     lastCell = now;
-                    draw.drawCell(gc, engine, frame, snake, fruit);
+                    draw.drawCell(gc, engine, frame, playerGame, snake, fruit);
                     try {
                         if(engine.getIsGameOver()){
                             stop();
                             stopGame();
-
                         }
 
                     } catch (IOException e) {
@@ -190,11 +260,12 @@ public class App extends Application {
         };
 
         aTimer.start();
+
         Scene scene = new Scene(root, frame.getWidth() * frame.getCellSize(), frame.getHeight() * frame.getCellSize());
 
-        keyboardListener.listenKey(aTimer, scene, snake);
+        keyboardListener.listenKey(scene, snake);
 
-
+        // snake length (5) initialization
         for(int i=0; i<5; ++i){
             snake.bodyCells.add(new Cell(frame.getWidth() / 2, frame.getHeight() / 2));
         }
@@ -205,14 +276,15 @@ public class App extends Application {
 
     }
 
-    private void stopGame() throws IOException { // function stopping the
-        // game
+    private void stopGame() throws IOException {
         mainStage.setScene(menu);
+
+        scoreStage = new Stage();
         scoreStage.setResizable(false);
+        scoreStage.getIcons().add(new Image("img/snake-icon.jpg"));
         scoreStage.setTitle("GAME OVER !!!");
 
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scores.fxml"));
-
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Scores.fxml")));
         Pane root1 = (Pane) root.lookup("#scores");
         okBtn = (Button) root.lookup("#enterButton");
         scoreNameField = (TextField) root.lookup("#inputField");
@@ -224,13 +296,18 @@ public class App extends Application {
                 ex.printStackTrace();
             }
         });
-
         Scene scene = new Scene(root1);
         scene.getStylesheets().add(css);
         scoreStage.setScene(scene);
-
         scoreStage.show();
 
+
+    }
+
+    public void changeLevel() throws IOException {
+        level = new Scene(level());
+        level.getStylesheets().add(css);
+        mainStage.setScene(level);
     }
 
 
@@ -238,9 +315,11 @@ public class App extends Application {
         try {
             FileInputStream fis = new FileInputStream("PlayerSaveFile.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
+
+            @SuppressWarnings("unchecked")
             List<Player> list = (List<Player>) ois.readObject();
 
-            player = FXCollections.observableList(list);
+            playerList = FXCollections.observableList(list);
             ois.close();
             fis.close();
         } catch (Exception e){
@@ -249,11 +328,11 @@ public class App extends Application {
 
     }
 
-    public void writeLeaderboard(ObservableList<Player> list) {
+    public void writeLeaderboard(ObservableList<Player> playerList) {
         try {
             FileOutputStream fos = new FileOutputStream("PlayerSaveFile.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(new ArrayList<Player>(list));
+            oos.writeObject(new ArrayList<>(playerList));
             oos.close();
             fos.close();
         } catch (Exception e){
@@ -262,8 +341,7 @@ public class App extends Application {
     }
 
     public Pane showLeaderboard() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LeaderBoard.fxml"));
-
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/LeaderBoard.fxml")));
         Pane root1 = (Pane) root.lookup("#pane");
         root1.getStyleClass().add("back");
 
@@ -277,51 +355,43 @@ public class App extends Application {
             }
         });
 
-        TableView<Player> table = new TableView();
+        TableView<Player> table = new TableView<>();
         table.getStyleClass().add("table-view");
-
         table.setMaxHeight((frame.getHeight() - 5) * frame.getCellSize());
         table.setMaxWidth(frame.getWidth() * frame.getCellSize());
 
         TableColumn<Player, String> name = new TableColumn<>("Name");
-        name.setMinWidth(frame.getWidth() * frame.getCellSize() / 2);
-
+        name.setMinWidth(frame.getWidth() * frame.getCellSize() / 2.0);
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Player, Integer> score = new TableColumn<>("Score");
-
-        score.setMinWidth(frame.getWidth() * frame.getCellSize() / 2);
+        score.setMinWidth(frame.getWidth() * frame.getCellSize() / 2.0);
         score.setCellValueFactory(new PropertyValueFactory<>("score"));
 
+        playerList.sort((c1, c2) -> Integer.compare(c2.getScore(), c1.getScore()));
 
-        Collections.sort(player, (c1, c2) -> {
-            if (c1.getScore() > c2.getScore())
-                return -1;
-            if (c1.getScore() < c2.getScore())
-                return 1;
-            return 0;
-        });
-
-        table.setItems(player);
-        table.getColumns().addAll(name, score);
+        table.setItems(playerList);
+        table.getColumns().add(name);
+        table.getColumns().add(score);
 
         root1.getChildren().add(table);
 
         return root1;
-
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         try {
             mainStage = primaryStage;
-            css = this.getClass().getResource("/css/style.bss").toExternalForm();
 
-            menu = new Scene(createMenu());
+            css = Objects.requireNonNull(this.getClass().getResource("/css/style.bss")).toExternalForm();
+
+            menu = new Scene(mainMenu());
             menu.getStylesheets().add(css);
 
             primaryStage.setScene(menu);
             primaryStage.setResizable(false);
+            primaryStage.getIcons().add(new Image("img/snake-icon.jpg"));
             primaryStage.setTitle("SNAKE GAME");
             primaryStage.show();
         }
@@ -330,11 +400,9 @@ public class App extends Application {
         }
     }
 
-
-
-
     public static void main(String[] args) {
         launch(args);
     }
+
 }
 
