@@ -11,17 +11,17 @@
 ## Sprint Overview
 | Planned (n)   | Completed (n) |
 | ------------- |-------------- |
-| n             | n             |
+| 3             | 3             |
 
 ## Sprint 3 Backlog
 
 | ID  | Title/Desc | Asignee | Status |
 | --- | ---------- | ------- | ------ |
-| 3.1 | Level Game | Raihan | DONE/FAILED |
-| 3.2 | Membuat UML | Rifqy | DONE/FAILED |
-| 3.3 | Bug Fixing | Rihlan | DONE/FAILED |
+| 3.1 | Menambah fitur ubah level game | Raihan | DONE |
+| 3.2 | Membuat UML | Rifqy | DONE |
+| 3.3 | Bug Fixing | Rihlan | DONE |
 
 ## Retrospective 
 
-Sprint kemarin dianggap terlalu sedikit sehingga diperlukan adanya penyesuaian tugas. 
+Semua tugas pada sprint 3 dapat terlaksana dengan baik 
 
