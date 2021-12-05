@@ -38,7 +38,7 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
    - Merapikan interface program
    
 - **[Sprint 3](changelog/sprint-3.md) - (30/11/2021 - 6/12/2021)**
-   - Menambah fitur ubal level game
+   - Menambah fitur ubah level game
    - Membuat UML
    - Bug fixing
 
@@ -125,12 +125,12 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
 
 
 
-UML image here
+![UML](/uml/ular.jpg "UML")
 
 ## Notable Assumption and Design App Details
 
 - Desain Program
-   - Program memiliki ukuran frame sebesar 600x450 dengan bentuk persegi serta setiap cellnya berukuran 30 x 30
+   - Program memiliki ukuran frame sebesar 600x450 yang setiap cellnya berukuran 30 x 30
    - Warna ular, buah, dan area permainan telah diatur dengan ketentuan yang telah ditetapkan
    - Perolehan skor akan bertambah sebanyak 1 setiap ular memakan buah
    - Terdapat menu untuk menampilkan pilihan memulai permainan, ubah level permainan (easy, medium, hard), leaderboard skor pemain, dan keluar dari program 
