@@ -38,9 +38,9 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
    - Merapikan interface program
    
 - **[Sprint 3](changelog/sprint-3.md) - (30/11/2021 - 6/12/2021)**
-   - Level Game
+   - Menambah fitur ubal level game
    - Membuat UML
-   - Bug Fixing
+   - Bug fixing
 
 ## Running The App
 
@@ -55,30 +55,90 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
 3. Tombol pada keyboard yang digunakan pada program :
    - Gunakan tombol `Up Arrow` , `Right Arrow` , `Down Arrow` , dan `Left Arrow` untuk mengarahkan ular.
    - Gunakan tombol `W` , `A` , `S` , dan `D` untuk mengarahkan ular.
-   - Gunakan tombol `Spacebar` untuk konfirmasi pilihan menu dan memulai permainan
-   - Gunakan tombol `Left Arrow` dan `Right Arrow` untuk mengubah nilai pada *settings*.
+   - Gunakan mouse untuk navigasi pada menu utama dan mengubah level pada menu level.
 
 ## Classes Used
 `App.java`
-   - Program utama yang berisi method App.
+   - Program utama yang berisi method main
+   - 24 Class Variable
+      - **@frame** - Ukuran frame dari program
+      - **@engine** - Status setiap state pada program
+      - **@keyboardListener** - Key untuk mengarahkan ular pada permainan
+      - **@draw** - Draw setiap komponen pada permainan
+      - **@snake** - Komponen ular pada permainan
+      - **@fuit** - Komponen buah pada permainan
+      - **@playerGame** - Pemain pada setiap permainan dijalankan
+      - **@menu** - Scene menu utama pada program
+      - **@level** - Scene menu level untuk mengubah level game
+      - **@leaderboard** - Scene menu leaderboard untuk menampilkan skor dan nama setiap pemain
+      - **@mainStage** - Stage untuk scene menu utama, level, dan leaderboard
+      - **@scoreStage** - Stage pop-up untuk input nama pemain pada akhir permainan
+      - **@startBtn** - Button untuk memulai permainan
+      - **@leaderboardBtn** - Button untuk menampilkan leaderboard
+      - **@levelBtn** - Button untuk masuk ke menu ubah level
+      - **@easyBtn** - Button untuk memilih level easy
+      - **@mediumBtn** - Button untuk memilih level medium
+      - **@hardBtn** - Button untuk memilih level hard
+      - **@backBtn** - Button untuk kembali ke scene sebelumnya
+      - **@okBtn** - Button untuk konfirmasi input nama pada akhir permainan
+      - **@exitBtn** - Button untuk save leaderboard dan keluar dari program
+      - **@scoreNameField** - Input field pada pop-up untuk nama pemain
+      - **@css** - Styling css yang digunakan pada program
+      - **@playerList** - List pemain pada leaderboard
+   - 9 Method
+      - **@mainMenu()** - Menampilkan menu utama
+      - **@level()** - Menampilkan menu level
+      - **@readLeaderboard()** - Membaca data pada leaderboard dari external file
+      - **@writeLeaderboard()** - Menyimpan data leaderboard ke external file
+      - **@showLeaderboard()** - Menampilkan leaderboard 
+      - **@startGame()** - Memulai permainan baru
+      - **@stopGame()** - Menghentikan permainan
+      - **@buttonClicked()** - Mengatur action saat suatu button diklik
+      - **@start()** - Menjalankan program utama
 
-TO;DO
+`Cell.java`
+
+
+`Direction.java`
+
+
+`Draw.java`
+
+
+`Engine.java`
+
+
+`Frame.java`
+
+
+`Fruit.java`
+
+
+`KeyboardListener.java`
+
+
+`Player.java`
+
+
+`Snake.java`
+
+
+
 
 UML image here
 
 ## Notable Assumption and Design App Details
 
 - Desain Program
-   - Program memiliki ukuran frame sebesar 800x800 dengan bentuk persegi
+   - Program memiliki ukuran frame sebesar 600x450 dengan bentuk persegi serta setiap cellnya berukuran 30 x 30
    - Warna ular, buah, dan area permainan telah diatur dengan ketentuan yang telah ditetapkan
-   - Perolehan skor akan bertambah sebanyak 5 setiap ular memakan satu buah
-   - Terdapat menu untuk menampilkan pilihan memulai permainan, leaderboard 10 skor tertinggi, pengaturan, dan keluar dari program 
-   - Tombol-tombol yang digunakan adalah arrow keys dan spacebar
+   - Perolehan skor akan bertambah sebanyak 1 setiap ular memakan buah
+   - Terdapat menu untuk menampilkan pilihan memulai permainan, ubah level permainan (easy, medium, hard), leaderboard skor pemain, dan keluar dari program 
+   - Tombol-tombol yang digunakan adalah arrow keys atau WASD dan mouse untuk navigasi pada menu
    - Ular berukuran awal 5 sel akan muncul ditengah area permainan dengan menghadap ke kiri 
    - Buah berukuran 1 sel akan muncul pada area secara random dengan aturan yang sudah ditetapkan
    - Jika Ular menyentuh setiap batas frame, maka permainan dinyatakan selesai
-   - Jika Ular menyentuh dirinya sendiri, maka permainan juga dinyatakan selesai
-   - Saat permainan selesai, akan ditampilkan skor dari user
-   - Pada bagian pengaturan, user dapat mengonfigurasi hal-hal berikut :
-      - Warna Ular
-      - Warna Area Permainan
+   - Jika Ular menyentuh tubuhnya sendiri, maka permainan juga dinyatakan selesai
+   - Saat permainan selesai, program akan meminta nama dari user sesuai skor yang didapat
+   - Skor yang telah didapat setiap pemain dapat dilihat pada menu leaderboard
+   - Bila ingin menyimpan data-data pada leaderboard, pilih save & exit saat keluar dari program (Data pada leaderboard tidak otomatis tersimpan saat keluar dari program)
