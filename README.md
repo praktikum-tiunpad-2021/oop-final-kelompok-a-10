@@ -38,7 +38,7 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
    - Merapikan interface program
    
 - **[Sprint 3](changelog/sprint-3.md) - (30/11/2021 - 6/12/2021)**
-   - Menambah fitur ubah level game
+   - Menambah fitur ubal level game
    - Membuat UML
    - Bug fixing
 
@@ -66,7 +66,7 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
       - **@keyboardListener** - Key untuk mengarahkan ular pada permainan
       - **@draw** - Draw setiap komponen pada permainan
       - **@snake** - Komponen ular pada permainan
-      - **@fuit** - Komponen buah pada permainan
+      - **@fruit** - Komponen buah pada permainan
       - **@playerGame** - Pemain pada setiap permainan dijalankan
       - **@menu** - Scene menu utama pada program
       - **@level** - Scene menu level untuk mengubah level game
@@ -97,40 +97,116 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
       - **@start()** - Menjalankan program utama
 
 `Cell.java`
-
+- Kelas untuk membuat suatu baris dalam ListView
+   - 2 Class Variable
+      - **@x** - Koordinat x
+      - **@y** - Koordinat y
+   - 1 Method
+      - **@Cell()** - Set koordinat x,y 
 
 `Direction.java`
-
+- Kelas Enum penentu arah gerak uar
+   - 1 Method
+      - **@Direction()** - berisi 4 arah gerak (UP, DOWN, RIGHT, LEFT)
 
 `Draw.java`
-
+   - Program 
+   - 9 Method
+      - **@drawBackground()** - Warna background untuk area permainan
+      - **@drawSnake()** - Gambar ular
+      - **@setSnakeColor()** - Atur warna dan gambar ular
+      - **@moveSnake()** - Gambar pergerakan ular
+      - **@increaseSnakeLength()** - Perpanjangan ular setelah memakan buah
+      - **@invalidSnakeMove()** - Game over saat ular menyentuh badan sendiri
+      - **@drawFruit()** -  Gambar buah dengan warna random
+      - **@drawPlayerScore()** - Menampilkan skor pemain
+      - **@drawAllComponents()** - Gambar semua komponen
 
 `Engine.java`
-
+- Kelas boolean penentu kondisi dalam game
+   - 3 Class Variable
+      - **@isInGame** - Kondisi bermain
+      - **@isGameOver** - Kondisi game over
+      - **@isInMenu** - Kondisi di menu
+   - 7 Method
+      - **@Engine()** - Konstruktor
+      - **@setIsInMenu()** - Setter kondisi di menu
+      - **@setIsInGame()** - Setter kondisi bermain
+      - **@setGameOver()** - Setter kondisi game over
+      - **@getIsInGame()** - Getter kondisi bermain
+      - **@getIsInMenu()** - Getter kondisi di menu
+      - **@getIsGameOver()** - Getter kondisi game over
 
 `Frame.java`
-
+- Kelas yang mengatur ukuran Frame aplikasi
+   - 3 Class Variable
+      - **@width** - lebar 
+      - **@height** - tinggi
+      - **@cellSize** -  Ukuran setiap sel di dalam area permainan
+   - 4 Method
+      - **@Frame()** - Konstruktor
+      - **@getWidth()** - Getter lebar
+      - **@getHeight()** - Getter tinggi
+      - **@getCellSize()** - Getter ukuran
 
 `Fruit.java`
-
+- Kelas buah
+   - 4 Class Variable
+      - **@color** - Warna buah
+      - **@x** - Koordinat x
+      - **@y** - Koordinat y
+      - **@rand** - Random warna buah
+   - 8 Method
+      - **@Fruit()** - Konstruktor
+      - **@newFruit()** - Memunculkan buah 
+      - **@setColor()** - Setter warna
+      - **@getColor()** - Getter warna
+      - **@setX()** - Setter x
+      - **@setY()** - Setter y
+      - **@getX()** - Getter x
+      - **@getY()** - Getter y
 
 `KeyboardListener.java`
-
+- Kelas kemudi ular menggunakan keyboard
+   - 1 Method
+      - **@listenKey()** - Kemudi ular menggunakan WASD atau Tombol Panah
 
 `Player.java`
-
+- Kelas pemain
+   - 2 Class Variable
+      - **@name** - Nama pemain
+      - **@score** - Skor pemain
+   - 6 Method
+      - **@Player()** - Konstruktor
+      - **@Player()** - Konstruktor
+      - **@setName()** - Setter nama
+      - **@incrementScore()** - Penambah skor
+      - **@getName()** - Getter nama
+      - **@getScore()** - Getter skor
 
 `Snake.java`
+- Kelas ular
+   - 3 Class Variable
+      - **@speed** - Kecepatan ular
+      - **@bodyCells** - Badan ular
+      - **@curDirection** - Arah ular
+   - 6 Method
+      - **@Snake()** - Konstruktor
+      - **@setSpeed()** - Setter kecepatan
+      - **@getSpeed()** - Getter kecepatan
+      - **@getBodySize()** - Getter ukuran badan ular 
+      - **@setDirection()** - Setter arah
+      - **@getCurDirection()** - Setter arah saat ini
 
 
 
 
-![UML](/uml/ular.jpg "UML")
+UML image here
 
 ## Notable Assumption and Design App Details
 
 - Desain Program
-   - Program memiliki ukuran frame sebesar 600x450 yang setiap cellnya berukuran 30 x 30
+   - Program memiliki ukuran frame sebesar 600x450 dengan bentuk persegi serta setiap cellnya berukuran 30 x 30
    - Warna ular, buah, dan area permainan telah diatur dengan ketentuan yang telah ditetapkan
    - Perolehan skor akan bertambah sebanyak 1 setiap ular memakan buah
    - Terdapat menu untuk menampilkan pilihan memulai permainan, ubah level permainan (easy, medium, hard), leaderboard skor pemain, dan keluar dari program 
