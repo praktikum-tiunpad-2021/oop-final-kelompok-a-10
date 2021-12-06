@@ -38,7 +38,7 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
    - Merapikan interface program
    
 - **[Sprint 3](changelog/sprint-3.md) - (30/11/2021 - 6/12/2021)**
-   - Menambah fitur ubal level game
+   - Menambah fitur ubah level game
    - Membuat UML
    - Bug fixing
 
