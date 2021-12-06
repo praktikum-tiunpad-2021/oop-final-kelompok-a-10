@@ -59,7 +59,7 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
 
 ## Classes Used
 `App.java`
-   - Program utama yang berisi method main
+- Program utama yang berisi method main
    - 24 Class Variable
       - **@frame** - Ukuran frame dari program
       - **@engine** - Status setiap state pada program
@@ -110,7 +110,7 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
       - **@Direction()** - berisi 4 arah gerak (UP, DOWN, RIGHT, LEFT)
 
 `Draw.java`
-   - Kelas untuk menggambar komponen dengan grafik
+- Kelas untuk menggambar komponen dengan grafik
    - 9 Method
       - **@drawBackground()** - Warna background untuk area permainan
       - **@drawSnake()** - Gambar ular
@@ -198,10 +198,7 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
       - **@setDirection()** - Setter arah
       - **@getCurDirection()** - Setter arah saat ini
 
-
-
-
-UML image here
+![UML](/uml/ular.jpg "UML")
 
 ## Notable Assumption and Design App Details
 
