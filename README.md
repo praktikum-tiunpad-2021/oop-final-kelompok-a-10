@@ -110,7 +110,7 @@ This repository is a final project (Java GUI) from Object-Oriented Programming C
       - **@Direction()** - berisi 4 arah gerak (UP, DOWN, RIGHT, LEFT)
 
 `Draw.java`
-   - Program 
+   - Kelas untuk menggambar komponen dengan grafik
    - 9 Method
       - **@drawBackground()** - Warna background untuk area permainan
       - **@drawSnake()** - Gambar ular
